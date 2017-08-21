@@ -1,0 +1,26 @@
+{
+    "title": "Kopokopo",
+    "alias": "kopokopo",
+    "groups": [{
+            "title": "Kopokopo Setting",
+            "settings": [{
+                    "name": "kopokopo_payments_enable_authentication",
+                    "label": "Enable Authentication",
+                    "default": "0",
+                    "tooltip": "Enabling Authentication will require all transaction to pare username and password.",
+                    "type": "text"
+                }, {
+                    "name": "kopokopo_payments_username",
+                    "label": "Kopokopo Username",
+                    "default": "",
+                    "tooltip": "Kopokopo username as provided on their website.",
+                    "type": "text"
+                }, {
+                    "name": "kopokopo_payments_password",
+                    "label": "Kopokopo Password",
+                    "default": "",
+                    "tooltip": "Kopokopo Password as provided on their website.",
+                    "type": "text"
+                }]
+        }]
+}

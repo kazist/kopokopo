@@ -1,0 +1,6 @@
+{
+    "KopokopoPayments": {
+        "namespace": "Kopokopo\\Payments",
+        "controller": "PaymentsController"
+    }
+}

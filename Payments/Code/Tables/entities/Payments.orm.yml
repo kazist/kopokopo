@@ -1,0 +1,97 @@
+Kopokopo\Payments\Code\Tables\Payments:
+  table: kopokopo_payments
+  type: entity
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    service_name:
+      name: service_name
+      type: string
+      length: 255
+      nullable: false
+    business_name:
+      name: business_name
+      type: string
+      length: 255
+      nullable: false
+    transaction_reference:
+      name: transaction_reference
+      type: string
+      length: 255
+      nullable: false
+    internal_transaction_id:
+      name: internal_transaction_id
+      type: string
+      length: 255
+      nullable: false
+    transaction_timestamp:
+      name: transaction_timestamp
+      type: string
+      length: 255
+      nullable: false
+    transaction_type:
+      name: transaction_type
+      type: string
+      length: 255
+      nullable: false
+    account_number:
+      name: account_number
+      type: string
+      length: 255
+      nullable: false
+    sender_phone:
+      name: sender_phone
+      type: string
+      length: 255
+      nullable: false
+    first_name:
+      name: first_name
+      type: string
+      length: 255
+      nullable: false
+    middle_name:
+      name: middle_name
+      type: string
+      length: 255
+      nullable: false
+    last_name:
+      name: last_name
+      type: string
+      length: 255
+      nullable: false
+    amount:
+      name: amount
+      type: string
+      length: 255
+      nullable: false
+    currency:
+      name: currency
+      type: string
+      length: 255
+    created_by:
+      name: created_by
+      type: integer
+      length: 11
+      nullable: false
+    date_created:
+      name: date_created
+      type: datetime
+      nullable: false
+    modified_by:
+      name: modified_by
+      type: integer
+      length: 11
+      nullable: false
+    date_modified:
+      name: date_modified
+      type: datetime
+      nullable: false
+  lifecycleCallbacks:
+    prePersist:
+      - onPrePersist
+      - onPrePersistCallbacks
+    preUpdate:
+      - onPreUpdate
+      - onPreUpdateCallbacks
