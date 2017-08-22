@@ -1,7 +1,7 @@
 
 [{
         "_table_name": "payments_gateways",
-        "tracking_id": "17",
+        "tracking_id": "19",
         "short_name": "kopokopo",
         "long_name": "Kopokopo",
         "input_label": "Kopokopo",
@@ -16,7 +16,7 @@
         "file_type": "csv",
         "file_limit": "2000",
         "form_path": "Kopokopo/Payments/Code/gateways",
-        "url": "{{ web_base }}/kopokopo/kopokopo/notify?payment_id={{ payment.id}}",
+        "url": "{{ web_base }}/kopokopo/payments/notify?payment_id={{ payment.id}}",
         "published": "1"
     }]
 

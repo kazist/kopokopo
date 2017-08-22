@@ -6,68 +6,23 @@ Kopokopo\Payments\Code\Tables\Payments:
       type: integer
       generator: { strategy: AUTO }
   fields:
-    sender_phone:
-      name: sender_phone
-      type: string
-      length: 255
-      nullable: true
-    service_name:
-      name: service_name
-      type: string
-      length: 255
-      nullable: true
-    business_name:
-      name: business_name
-      type: string
-      length: 255
-      nullable: true
     transaction_reference:
       name: transaction_reference
       type: string
       length: 255
       nullable: true
-    internal_transaction_id:
-      name: internal_transaction_id
-      type: string
-      length: 255
-      nullable: true
-    transaction_timestamp:
-      name: transaction_timestamp
-      type: string
-      length: 255
-      nullable: true
-    transaction_type:
-      name: transaction_type
-      type: string
-      length: 255
-      nullable: true
-    account_number:
-      name: account_number
-      type: string
-      length: 255
-      nullable: true
-    first_name:
-      name: first_name
-      type: string
-      length: 255
-      nullable: true
-    middle_name:
-      name: middle_name
-      type: string
-      length: 255
-      nullable: true
-    last_name:
-      name: last_name
-      type: string
-      length: 255
+    user_id:
+      name: user_id
+      type: integer
+      length: 11
       nullable: true
     amount:
       name: amount
-      type: string
-      length: 255
+      type: integer
+      length: 11
       nullable: true
-    currency:
-      name: currency
+    sender_phone:
+      name: sender_phone
       type: string
       length: 255
       nullable: true

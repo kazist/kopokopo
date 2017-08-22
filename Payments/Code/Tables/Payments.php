@@ -25,93 +25,30 @@ class Payments extends \Kazist\Table\BaseTable
     /**
      * @var string
      *
-     * @ORM\Column(name="sender_phone", type="string", length=255, nullable=true)
-     */
-    protected $sender_phone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="service_name", type="string", length=255, nullable=true)
-     */
-    protected $service_name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="business_name", type="string", length=255, nullable=true)
-     */
-    protected $business_name;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="transaction_reference", type="string", length=255, nullable=true)
      */
     protected $transaction_reference;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="internal_transaction_id", type="string", length=255, nullable=true)
+     * @ORM\Column(name="user_id", type="integer", length=11, nullable=true)
      */
-    protected $internal_transaction_id;
+    protected $user_id;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="transaction_timestamp", type="string", length=255, nullable=true)
-     */
-    protected $transaction_timestamp;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="transaction_type", type="string", length=255, nullable=true)
-     */
-    protected $transaction_type;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="account_number", type="string", length=255, nullable=true)
-     */
-    protected $account_number;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
-     */
-    protected $first_name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="middle_name", type="string", length=255, nullable=true)
-     */
-    protected $middle_name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
-     */
-    protected $last_name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="amount", type="string", length=255, nullable=true)
+     * @ORM\Column(name="amount", type="integer", length=11, nullable=true)
      */
     protected $amount;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="currency", type="string", length=255, nullable=true)
+     * @ORM\Column(name="sender_phone", type="string", length=255, nullable=true)
      */
-    protected $currency;
+    protected $sender_phone;
 
     /**
      * @var integer
@@ -153,78 +90,6 @@ class Payments extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set senderPhone
-     *
-     * @param string $senderPhone
-     *
-     * @return Payments
-     */
-    public function setSenderPhone($senderPhone)
-    {
-        $this->sender_phone = $senderPhone;
-
-        return $this;
-    }
-
-    /**
-     * Get senderPhone
-     *
-     * @return string
-     */
-    public function getSenderPhone()
-    {
-        return $this->sender_phone;
-    }
-
-    /**
-     * Set serviceName
-     *
-     * @param string $serviceName
-     *
-     * @return Payments
-     */
-    public function setServiceName($serviceName)
-    {
-        $this->service_name = $serviceName;
-
-        return $this;
-    }
-
-    /**
-     * Get serviceName
-     *
-     * @return string
-     */
-    public function getServiceName()
-    {
-        return $this->service_name;
-    }
-
-    /**
-     * Set businessName
-     *
-     * @param string $businessName
-     *
-     * @return Payments
-     */
-    public function setBusinessName($businessName)
-    {
-        $this->business_name = $businessName;
-
-        return $this;
-    }
-
-    /**
-     * Get businessName
-     *
-     * @return string
-     */
-    public function getBusinessName()
-    {
-        return $this->business_name;
-    }
-
-    /**
      * Set transactionReference
      *
      * @param string $transactionReference
@@ -249,177 +114,33 @@ class Payments extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set internalTransactionId
+     * Set userId
      *
-     * @param string $internalTransactionId
+     * @param integer $userId
      *
      * @return Payments
      */
-    public function setInternalTransactionId($internalTransactionId)
+    public function setUserId($userId)
     {
-        $this->internal_transaction_id = $internalTransactionId;
+        $this->user_id = $userId;
 
         return $this;
     }
 
     /**
-     * Get internalTransactionId
+     * Get userId
      *
-     * @return string
+     * @return integer
      */
-    public function getInternalTransactionId()
+    public function getUserId()
     {
-        return $this->internal_transaction_id;
-    }
-
-    /**
-     * Set transactionTimestamp
-     *
-     * @param string $transactionTimestamp
-     *
-     * @return Payments
-     */
-    public function setTransactionTimestamp($transactionTimestamp)
-    {
-        $this->transaction_timestamp = $transactionTimestamp;
-
-        return $this;
-    }
-
-    /**
-     * Get transactionTimestamp
-     *
-     * @return string
-     */
-    public function getTransactionTimestamp()
-    {
-        return $this->transaction_timestamp;
-    }
-
-    /**
-     * Set transactionType
-     *
-     * @param string $transactionType
-     *
-     * @return Payments
-     */
-    public function setTransactionType($transactionType)
-    {
-        $this->transaction_type = $transactionType;
-
-        return $this;
-    }
-
-    /**
-     * Get transactionType
-     *
-     * @return string
-     */
-    public function getTransactionType()
-    {
-        return $this->transaction_type;
-    }
-
-    /**
-     * Set accountNumber
-     *
-     * @param string $accountNumber
-     *
-     * @return Payments
-     */
-    public function setAccountNumber($accountNumber)
-    {
-        $this->account_number = $accountNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get accountNumber
-     *
-     * @return string
-     */
-    public function getAccountNumber()
-    {
-        return $this->account_number;
-    }
-
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     *
-     * @return Payments
-     */
-    public function setFirstName($firstName)
-    {
-        $this->first_name = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->first_name;
-    }
-
-    /**
-     * Set middleName
-     *
-     * @param string $middleName
-     *
-     * @return Payments
-     */
-    public function setMiddleName($middleName)
-    {
-        $this->middle_name = $middleName;
-
-        return $this;
-    }
-
-    /**
-     * Get middleName
-     *
-     * @return string
-     */
-    public function getMiddleName()
-    {
-        return $this->middle_name;
-    }
-
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     *
-     * @return Payments
-     */
-    public function setLastName($lastName)
-    {
-        $this->last_name = $lastName;
-
-        return $this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->last_name;
+        return $this->user_id;
     }
 
     /**
      * Set amount
      *
-     * @param string $amount
+     * @param integer $amount
      *
      * @return Payments
      */
@@ -433,7 +154,7 @@ class Payments extends \Kazist\Table\BaseTable
     /**
      * Get amount
      *
-     * @return string
+     * @return integer
      */
     public function getAmount()
     {
@@ -441,27 +162,27 @@ class Payments extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set currency
+     * Set senderPhone
      *
-     * @param string $currency
+     * @param string $senderPhone
      *
      * @return Payments
      */
-    public function setCurrency($currency)
+    public function setSenderPhone($senderPhone)
     {
-        $this->currency = $currency;
+        $this->sender_phone = $senderPhone;
 
         return $this;
     }
 
     /**
-     * Get currency
+     * Get senderPhone
      *
      * @return string
      */
-    public function getCurrency()
+    public function getSenderPhone()
     {
-        return $this->currency;
+        return $this->sender_phone;
     }
 
     /**

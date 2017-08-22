@@ -17,16 +17,16 @@ namespace Kopokopo\Payments\Code\Controllers;
 
 defined('KAZIST') or exit('Not Kazist Framework');
 
-use Kopokopo\Payments\Code\Models\KopokopoModel;
+use Kopokopo\Payments\Code\Models\PaymentsModel;
 use Payments\Payments\Code\Controllers\PaymentsController AS BasePaymentsController;
 
 class PaymentsController extends BasePaymentsController {
 
     public function cancelAction() {
 
-        $payment_id = $this->request->query->get('id');
+        $payment_id = $this->request->query->get('payment_id');
 
-        $this->model = new KopokopoModel();
+        $this->model = new PaymentsModel();
         $this->model->cancelTransaction($payment_id);
         $payment_url = $this->model->getUrlByPaymentId($payment_id);
 
@@ -35,9 +35,9 @@ class PaymentsController extends BasePaymentsController {
 
     public function returnAction() {
 
-        $payment_id = $this->request->query->get('id');
+        $payment_id = $this->request->query->get('payment_id');
 
-        $this->model = new KopokopoModel();
+        $this->model = new PaymentsModel();
         $this->model->completeTransaction($payment_id);
         $payment_url = $this->model->getUrlByPaymentId($payment_id);
 
@@ -46,14 +46,20 @@ class PaymentsController extends BasePaymentsController {
 
     public function notifyAction() {
 
-        $payment_id = $this->request->query->get('id');
+        $payment_id = $this->request->query->get('payment_id');
+        $mpesa_code = $this->request->get('mpesa_code');
 
-        $this->model = new KopokopoModel();
-        $this->model->processKopokopo($payment_id);
-        $this->model->notificationTransaction($payment_id);
-        $payment_url = $this->model->getUrlByPaymentId($payment_id);
+        if ($this->model->checkMpesaCodeExist($mpesa_code)) {
 
-        return $this->redirect($payment_url);
+            $this->model = new PaymentsModel();
+            $this->model->processKopokopo($payment_id, $mpesa_code);
+            $this->model->notificationTransaction($payment_id);
+            $payment_url = $this->model->getUrlByPaymentId($payment_id);
+
+            return $this->redirect($payment_url);
+        } else {
+            return $this->redirectToRoute('payments.payments.pay', array('payment_id' => $payment_id));
+        }
     }
 
 }

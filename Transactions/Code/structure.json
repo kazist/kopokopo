@@ -23,7 +23,9 @@
                                                 "sender_phone",
                                                 "amount",
                                                 "currency",
-                                                "name"
+                                                "name",
+                                                "used",
+                                                "used_by"
                                             ]
                                         }
                                     },
@@ -92,6 +94,7 @@
                 "transaction_reference",
                 "name",
                 "sender_phone",
+                "used_by",
                 "service_name",
                 "business_number",
                 "amount",
@@ -99,9 +102,11 @@
                 "date_created"
             ],
             "has_label": [
-                "id",
                 "transaction_reference",
+                "name",
                 "sender_phone",
+                "used_by",
+                "used",
                 "service_name",
                 "business_number",
                 "amount",
@@ -198,6 +203,63 @@
             "name": "sender_phone",
             "html_type": "text",
             "mysql_type": "varchar",
+            "view_side": "",
+            "index": "",
+            "id_name": "",
+            "class_name": "",
+            "default_value": "",
+            "size": "",
+            "readonly": "0",
+            "format_value": "",
+            "parameters": {
+                "general": [],
+                "source": [],
+                "save": {
+                    "view_side": "both",
+                    "index": ""
+                },
+                "media": [],
+                "payment": []
+            }
+        },
+        {
+            "dropdown_filter": "0",
+            "nullable": "0",
+            "name": "used_by",
+            "html_type": "autocomplete",
+            "mysql_type": "int",
+            "view_side": "",
+            "index": "",
+            "id_name": "",
+            "class_name": "",
+            "default_value": "",
+            "size": "",
+            "readonly": "0",
+            "format_value": "",
+            "parameters": {
+                "general": [],
+                "source": {
+                    "data_source": "db_table",
+                    "join_field": "id",
+                    "display_field": [
+                        "name"
+                    ],
+                    "join_table_name": "users_users"
+                },
+                "save": {
+                    "view_side": "both",
+                    "index": ""
+                },
+                "media": [],
+                "payment": []
+            }
+        },
+        {
+            "dropdown_filter": "0",
+            "nullable": "0",
+            "name": "used",
+            "html_type": "yesno",
+            "mysql_type": "int",
             "view_side": "",
             "index": "",
             "id_name": "",
@@ -620,6 +682,9 @@
             "kt.transaction_reference",
             "kt.name",
             "kt.sender_phone",
+            "kt.used_by",
+            "uu.name AS used_by_name",
+            "kt.used",
             "kt.service_name",
             "kt.business_number",
             "kt.internal_transaction_id",
@@ -635,6 +700,14 @@
             "kt.date_created",
             "kt.modified_by",
             "kt.date_modified"
+        ],
+        "leftjoin": [
+            {
+                "table": "Users\\Users\\Code\\Tables\\Users",
+                "alias": "uu",
+                "name": "#__users_users",
+                "on": "kt.used_by = uu.id"
+            }
         ]
     }
 }

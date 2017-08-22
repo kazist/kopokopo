@@ -14,6 +14,7 @@ use Kazist\Model\BaseModel;
 use Kazist\KazistFactory;
 use Payments\Payments\Code\Models\PaymentsModel AS BasePaymentsModel;
 use Kazist\Service\Email\Email;
+use Kazist\Service\Database\Query;
 
 /**
  * Description of MarketplaceModel
@@ -49,82 +50,110 @@ class PaymentsModel extends BasePaymentsModel {
         return $this->generateUrl('affiliates.affiliates');
     }
 
-    public function processKopokopo($payment_id) {
+    public function checkMpesaCodeExist($mpesa_code) {
 
-        $email = new Email();
+        $factory = new KazistFactory();
 
-        $posted_data = $this->getKopokopoParams($payment_id);
-        $payment_method = $posted_data['p1'];
+        $query = new Query();
+        $query->select('kt.*');
+        $query->from('#__kopokopo_transactions', 'kt');
+        $query->where('kt.transaction_reference=:transaction_reference');
+        $query->setParameter('transaction_reference', $mpesa_code);
+        $record = $query->loadObject();
 
+        if (is_object($record)) {
+            if (!(int) $record->used) {
+                return true;
+            } else {
+                $factory->enqueueMessage('The code [' . $mpesa_code . '] is already used.', 'error');
+                return false;
+            }
+        } else {
+            $factory->enqueueMessage('The code [' . $mpesa_code . '] Provided does not exist.', 'error');
+            return false;
+        }
+    }
+
+    public function processKopokopo($payment_id, $mpesa_code) {
+
+        $is_valid = true;
+
+        $factory = new KazistFactory();
+
+        $gateway = $this->getGatewayByName('kopokopo');
+
+        $kopokopo_obj = $this->getKopokopoTransaction(trim($mpesa_code));
         $payment = $this->getPaymentById($payment_id);
-        $gateway = $this->getGatewayByShortName($payment_method);
         $deductions = json_decode($payment->deductions);
-        $required_amount = (isset($deductions->amount) && $deductions->amount) ? $deductions->amount : $payment->amount;
-        $paid_amount = (isset($posted_data['mc']) && $posted_data['mc']) ? $posted_data['mc'] : 0;
+        $required_amount = ($deductions->amount) ? $deductions->amount : $payment->amount;
+        $paid_amount = $kopokopo_amount = ($kopokopo_obj->amount) ? $kopokopo_obj->amount : '';
 
-        $paid_amount = $this->getConverterAmount($paid_amount, $gateway, false);
-        $required_amount = $this->getConverterAmount($required_amount, $gateway, false);
+        // $paid_amount = $this->getConverterAmount($paid_amount, $gateway, false);
+        //  $required_amount = $this->getConverterAmount($required_amount, $gateway, false);
 
-        $vendor_ref = $this->getGatewayParameter($gateway->id, 'vendor_ref');
-
-        $ipnurl = "https://www.ipayafrica.com/ipn/?vendor=" . $vendor_ref .
-                "&id=" . $posted_data['item_id'] .
-                "&ivm=" . $posted_data['ivm'] .
-                "&qwh=" . $posted_data['qwh'] .
-                "&afd=" . $posted_data['afd'] .
-                "&poi=" . $posted_data['poi'] .
-                "&uyt=" . $posted_data['uyt'] .
-                "&ifd=" . $posted_data['ifd'];
-
-
-        $fp = fopen($ipnurl, "rb");
-        $status = stream_get_contents($fp, -1, -1);
-        fclose($fp);
-
-        if ($status == '') {
-
-            // Get cURL resource
-            $curl = curl_init();
-            // Set some options - we are passing in a useragent too here
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => $ipnurl,
-                CURLOPT_USERAGENT => 'SBC call'
-            ));
-            // Send the request & save response to $resp
-            $status = curl_exec($curl);
-            // Close request to clear up some resources
-            curl_close($curl);
-        }
-
-        $payment->type = $payment_method;
-        $payment->gateway_id = $gateway->id;
-        $payment->code = $posted_data['txncd'];
+        $payment->code = $mpesa_code;
         $payment->receipt_no = $payment->receipt_no;
+        $payment->type = 'kopokopo';
+        $payment->gateway_id = $gateway->id;
 
-        switch ($status) {
-
-            case 'aei7p7yrx4ae34':
-            case 'eq3i7p5yt7645e':
-            case 'dtfi4p7yty45wq':
-
-                parent::savePaidAmount($payment, $required_amount, $paid_amount);
-
-                if ($paid_amount >= $required_amount) {
-                    parent::successfulTransaction($payment_id, $this->code);
-                } else {
-                    parent::failTransaction($payment_id);
-                }
-
-                break;
-            case 'fe2707etr5s4wq':
-            case 'cr5i3pgy9867e1':
-                parent::failTransaction($payment_id);
-                break;
-            case 'bdi6p2yy76etrs':
-                parent::pendingTransaction($payment_id);
-                break;
+        if ($required_amount > $kopokopo_amount) {
+            $paid_amount = $required_amount;
         }
+
+        if (!is_object($kopokopo_obj)) {
+            $factory->enqueueMessage('Mpesa Code (' . $mpesa_code . ') does not exist.', 'error');
+            return false;
+        }
+
+        parent::savePaidAmount($payment, $required_amount, $paid_amount);
+
+        if ($paid_amount < $required_amount) {
+            $is_valid = false;
+        }
+
+        $this->saveKopokopoPayment($paid_amount, $mpesa_code,$kopokopo_obj->sender_phone);
+        $this->updateKopokopo($kopokopo_obj);
+
+        return $is_valid;
+    }
+
+    public function saveKopokopoPayment($amount, $mpesa_code,$phone) {
+
+        $factory = new KazistFactory();
+        $user = $factory->getUser();
+
+        $kopokopo_obj = new \stdClass();
+        $kopokopo_obj->transaction_reference = $mpesa_code;
+        $kopokopo_obj->user_id = $user->id;
+        $kopokopo_obj->sender_phone = $phone;
+        $kopokopo_obj->amount = $amount;
+
+        $factory->saveRecord('#__kopokopo_payments', $kopokopo_obj);
+    }
+
+    public function updateKopokopo($kopokopo_obj) {
+
+        $factory = new KazistFactory();
+        $user = $factory->getUser();
+
+        $kopokopo_obj->used = 1;
+        $kopokopo_obj->date_used = date('Y-m-d H:i:s');
+        $kopokopo_obj->used_by = $user->id;
+
+        $factory->saveRecord('#__kopokopo_transactions', $kopokopo_obj);
+    }
+
+    public function getKopokopoTransaction($mpesa_code) {
+
+        $query = new Query();
+        $query->select('kt.*');
+        $query->from('#__kopokopo_transactions', 'kt');
+        $query->where('kt.transaction_reference=:transaction_reference');
+        $query->setParameter('transaction_reference', $mpesa_code);
+
+        $record = $query->loadObject();
+
+        return $record;
     }
 
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Transactions
  *
- * @ORM\Table(name="kopokopo_transactions")
+ * @ORM\Table(name="kopokopo_transactions", indexes={@ORM\Index(name="used_by_index", columns={"used_by"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
@@ -42,6 +42,20 @@ class Transactions extends \Kazist\Table\BaseTable
      * @ORM\Column(name="sender_phone", type="string", length=255, nullable=true)
      */
     protected $sender_phone;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="used_by", type="integer", length=11, nullable=false)
+     */
+    protected $used_by;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="used", type="integer", length=11, nullable=false)
+     */
+    protected $used;
 
     /**
      * @var string
@@ -229,6 +243,54 @@ class Transactions extends \Kazist\Table\BaseTable
     public function getSenderPhone()
     {
         return $this->sender_phone;
+    }
+
+    /**
+     * Set usedBy
+     *
+     * @param integer $usedBy
+     *
+     * @return Transactions
+     */
+    public function setUsedBy($usedBy)
+    {
+        $this->used_by = $usedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get usedBy
+     *
+     * @return integer
+     */
+    public function getUsedBy()
+    {
+        return $this->used_by;
+    }
+
+    /**
+     * Set used
+     *
+     * @param integer $used
+     *
+     * @return Transactions
+     */
+    public function setUsed($used)
+    {
+        $this->used = $used;
+
+        return $this;
+    }
+
+    /**
+     * Get used
+     *
+     * @return integer
+     */
+    public function getUsed()
+    {
+        return $this->used;
     }
 
     /**
