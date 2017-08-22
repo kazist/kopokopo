@@ -17,8 +17,43 @@ namespace Kopokopo\Payments\Code\Controllers;
 
 defined('KAZIST') or exit('Not Kazist Framework');
 
-use Kazist\Controller\BaseController;
+use Kopokopo\Payments\Code\Models\KopokopoModel;
+use Payments\Payments\Code\Controllers\PaymentsController AS BasePaymentsController;
 
-class PaymentsController extends BaseController {
-    
+class PaymentsController extends BasePaymentsController {
+
+    public function cancelAction() {
+
+        $payment_id = $this->request->query->get('id');
+
+        $this->model = new KopokopoModel();
+        $this->model->cancelTransaction($payment_id);
+        $payment_url = $this->model->getUrlByPaymentId($payment_id);
+
+        return $this->redirect($payment_url);
+    }
+
+    public function returnAction() {
+
+        $payment_id = $this->request->query->get('id');
+
+        $this->model = new KopokopoModel();
+        $this->model->completeTransaction($payment_id);
+        $payment_url = $this->model->getUrlByPaymentId($payment_id);
+
+        return $this->redirect($payment_url);
+    }
+
+    public function notifyAction() {
+
+        $payment_id = $this->request->query->get('id');
+
+        $this->model = new KopokopoModel();
+        $this->model->processKopokopo($payment_id);
+        $this->model->notificationTransaction($payment_id);
+        $payment_url = $this->model->getUrlByPaymentId($payment_id);
+
+        return $this->redirect($payment_url);
+    }
+
 }

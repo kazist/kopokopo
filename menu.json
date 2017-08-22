@@ -1,0 +1,23 @@
+{
+    "parent": "payments",
+    "menulist": [{
+
+            "title": "Kopokopo",
+            "alias": "admin_kopokopo_kopokopo",
+            "url": "",
+            "icon": "fa fa-money",
+            "children": [{
+                    "title": " Completed Payments",
+                    "alias": "admin_kopokopo_payments",
+                    "url": "admin/kopokopo/payments",
+                    "icon": "fa fa-money",
+                    "children": []
+                }, {
+                    "title": " Transaction",
+                    "alias": "admin_kopokopo_transactions",
+                    "url": "admin/kopokopo/transactions",
+                    "icon": "fa fa-money",
+                    "children": []
+                }]
+        }]
+}

@@ -1,17 +1,17 @@
 <?php
 
-namespace Kopokopo\Payments\Code\Tables;
+namespace Kopokopo\Transactions\Code\Tables;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Payments
+ * Transactions
  *
- * @ORM\Table(name="kopokopo_payments")
+ * @ORM\Table(name="kopokopo_transactions")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Payments extends \Kazist\Table\BaseTable
+class Transactions extends \Kazist\Table\BaseTable
 {
     /**
      * @var integer
@@ -21,6 +21,20 @@ class Payments extends \Kazist\Table\BaseTable
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="transaction_reference", type="string", length=255, nullable=true)
+     */
+    protected $transaction_reference;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    protected $name;
 
     /**
      * @var string
@@ -39,16 +53,9 @@ class Payments extends \Kazist\Table\BaseTable
     /**
      * @var string
      *
-     * @ORM\Column(name="business_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="business_number", type="string", length=255, nullable=true)
      */
-    protected $business_name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="transaction_reference", type="string", length=255, nullable=true)
-     */
-    protected $transaction_reference;
+    protected $business_number;
 
     /**
      * @var string
@@ -153,11 +160,59 @@ class Payments extends \Kazist\Table\BaseTable
     }
 
     /**
+     * Set transactionReference
+     *
+     * @param string $transactionReference
+     *
+     * @return Transactions
+     */
+    public function setTransactionReference($transactionReference)
+    {
+        $this->transaction_reference = $transactionReference;
+
+        return $this;
+    }
+
+    /**
+     * Get transactionReference
+     *
+     * @return string
+     */
+    public function getTransactionReference()
+    {
+        return $this->transaction_reference;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Transactions
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set senderPhone
      *
      * @param string $senderPhone
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setSenderPhone($senderPhone)
     {
@@ -181,7 +236,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $serviceName
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setServiceName($serviceName)
     {
@@ -201,51 +256,27 @@ class Payments extends \Kazist\Table\BaseTable
     }
 
     /**
-     * Set businessName
+     * Set businessNumber
      *
-     * @param string $businessName
+     * @param string $businessNumber
      *
-     * @return Payments
+     * @return Transactions
      */
-    public function setBusinessName($businessName)
+    public function setBusinessNumber($businessNumber)
     {
-        $this->business_name = $businessName;
+        $this->business_number = $businessNumber;
 
         return $this;
     }
 
     /**
-     * Get businessName
+     * Get businessNumber
      *
      * @return string
      */
-    public function getBusinessName()
+    public function getBusinessNumber()
     {
-        return $this->business_name;
-    }
-
-    /**
-     * Set transactionReference
-     *
-     * @param string $transactionReference
-     *
-     * @return Payments
-     */
-    public function setTransactionReference($transactionReference)
-    {
-        $this->transaction_reference = $transactionReference;
-
-        return $this;
-    }
-
-    /**
-     * Get transactionReference
-     *
-     * @return string
-     */
-    public function getTransactionReference()
-    {
-        return $this->transaction_reference;
+        return $this->business_number;
     }
 
     /**
@@ -253,7 +284,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $internalTransactionId
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setInternalTransactionId($internalTransactionId)
     {
@@ -277,7 +308,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $transactionTimestamp
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setTransactionTimestamp($transactionTimestamp)
     {
@@ -301,7 +332,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $transactionType
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setTransactionType($transactionType)
     {
@@ -325,7 +356,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $accountNumber
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setAccountNumber($accountNumber)
     {
@@ -349,7 +380,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $firstName
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setFirstName($firstName)
     {
@@ -373,7 +404,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $middleName
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setMiddleName($middleName)
     {
@@ -397,7 +428,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $lastName
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setLastName($lastName)
     {
@@ -421,7 +452,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $amount
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setAmount($amount)
     {
@@ -445,7 +476,7 @@ class Payments extends \Kazist\Table\BaseTable
      *
      * @param string $currency
      *
-     * @return Payments
+     * @return Transactions
      */
     public function setCurrency($currency)
     {

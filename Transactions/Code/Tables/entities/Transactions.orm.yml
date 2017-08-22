@@ -1,11 +1,21 @@
-Kopokopo\Payments\Code\Tables\Payments:
-  table: kopokopo_payments
+Kopokopo\Transactions\Code\Tables\Transactions:
+  table: kopokopo_transactions
   type: entity
   id:
     id:
       type: integer
       generator: { strategy: AUTO }
   fields:
+    transaction_reference:
+      name: transaction_reference
+      type: string
+      length: 255
+      nullable: true
+    name:
+      name: name
+      type: string
+      length: 255
+      nullable: true
     sender_phone:
       name: sender_phone
       type: string
@@ -16,13 +26,8 @@ Kopokopo\Payments\Code\Tables\Payments:
       type: string
       length: 255
       nullable: true
-    business_name:
-      name: business_name
-      type: string
-      length: 255
-      nullable: true
-    transaction_reference:
-      name: transaction_reference
+    business_number:
+      name: business_number
       type: string
       length: 255
       nullable: true

@@ -18,11 +18,12 @@
                                             "hide_on_new": null,
                                             "fields": [
                                                 "service_name",
-                                                "business_name",
+                                                "business_number",
                                                 "account_number",
                                                 "sender_phone",
                                                 "amount",
-                                                "currency"
+                                                "currency",
+                                                "name"
                                             ]
                                         }
                                     },
@@ -88,20 +89,23 @@
         },
         "table": {
             "fields": [
-                "service_name",
-                "business_name",
+                "transaction_reference",
+                "name",
                 "sender_phone",
-                "first_name",
-                "middle_name",
-                "last_name",
+                "service_name",
+                "business_number",
                 "amount",
                 "currency",
-                "created_by",
                 "date_created"
             ],
             "has_label": [
                 "id",
-                "created_by",
+                "transaction_reference",
+                "sender_phone",
+                "service_name",
+                "business_number",
+                "amount",
+                "currency",
                 "date_created"
             ]
         }
@@ -126,6 +130,56 @@
             "default_value": "",
             "size": "",
             "readonly": "",
+            "format_value": "",
+            "parameters": {
+                "general": [],
+                "source": [],
+                "save": {
+                    "view_side": "both",
+                    "index": ""
+                },
+                "media": [],
+                "payment": []
+            }
+        },
+        {
+            "dropdown_filter": "0",
+            "nullable": "1",
+            "name": "transaction_reference",
+            "html_type": "text",
+            "mysql_type": "varchar",
+            "view_side": "",
+            "index": "",
+            "id_name": "",
+            "class_name": "",
+            "default_value": "",
+            "size": "",
+            "readonly": "0",
+            "format_value": "",
+            "parameters": {
+                "general": [],
+                "source": [],
+                "save": {
+                    "view_side": "both",
+                    "index": ""
+                },
+                "media": [],
+                "payment": []
+            }
+        },
+        {
+            "dropdown_filter": "0",
+            "nullable": "1",
+            "name": "name",
+            "html_type": "text",
+            "mysql_type": "varchar",
+            "view_side": "",
+            "index": "",
+            "id_name": "",
+            "class_name": "",
+            "default_value": "",
+            "size": "",
+            "readonly": "0",
             "format_value": "",
             "parameters": {
                 "general": [],
@@ -191,32 +245,7 @@
         {
             "dropdown_filter": "0",
             "nullable": "1",
-            "name": "business_name",
-            "html_type": "text",
-            "mysql_type": "varchar",
-            "view_side": "",
-            "index": "",
-            "id_name": "",
-            "class_name": "",
-            "default_value": "",
-            "size": "",
-            "readonly": "0",
-            "format_value": "",
-            "parameters": {
-                "general": [],
-                "source": [],
-                "save": {
-                    "view_side": "both",
-                    "index": ""
-                },
-                "media": [],
-                "payment": []
-            }
-        },
-        {
-            "dropdown_filter": "0",
-            "nullable": "1",
-            "name": "transaction_reference",
+            "name": "business_number",
             "html_type": "text",
             "mysql_type": "varchar",
             "view_side": "",
@@ -565,12 +594,12 @@
         }
     ],
     "primarykey": "id",
-    "table_name": "kopokopo_payments",
-    "table_alias": "kp",
+    "table_name": "kopokopo_transactions",
+    "table_alias": "kt",
     "foreignkey": "",
     "renamedfields": "",
     "main_fields": [
-        "transaction_reference"
+        "id"
     ],
     "main_view": "table",
     "has_view": "1",
@@ -578,33 +607,34 @@
     "email_on_new": "0",
     "email_on_edit": "0",
     "email_on_delete": "0",
-    "subset_name": "payments",
+    "subset_name": "transactions",
     "right_field": "",
     "query": {
         "from": {
-            "table": "Kopokopo\\Payments\\Code\\Tables\\Payments",
-            "alias": "kp",
-            "name": "#__kopokopo_payments"
+            "table": "Kopokopo\\Transactions\\Code\\Tables\\Transactions",
+            "alias": "kt",
+            "name": "#__kopokopo_transactions"
         },
         "select": [
-            "kp.id",
-            "kp.sender_phone",
-            "kp.service_name",
-            "kp.business_name",
-            "kp.transaction_reference",
-            "kp.internal_transaction_id",
-            "kp.transaction_timestamp",
-            "kp.transaction_type",
-            "kp.account_number",
-            "kp.first_name",
-            "kp.middle_name",
-            "kp.last_name",
-            "kp.amount",
-            "kp.currency",
-            "kp.created_by",
-            "kp.date_created",
-            "kp.modified_by",
-            "kp.date_modified"
+            "kt.id",
+            "kt.transaction_reference",
+            "kt.name",
+            "kt.sender_phone",
+            "kt.service_name",
+            "kt.business_number",
+            "kt.internal_transaction_id",
+            "kt.transaction_timestamp",
+            "kt.transaction_type",
+            "kt.account_number",
+            "kt.first_name",
+            "kt.middle_name",
+            "kt.last_name",
+            "kt.amount",
+            "kt.currency",
+            "kt.created_by",
+            "kt.date_created",
+            "kt.modified_by",
+            "kt.date_modified"
         ]
     }
 }

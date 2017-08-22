@@ -8,7 +8,7 @@
                     "label": "Enable Authentication",
                     "default": "0",
                     "tooltip": "Enabling Authentication will require all transaction to pare username and password.",
-                    "type": "text"
+                    "type": "yesno"
                 }, {
                     "name": "kopokopo_payments_username",
                     "label": "Kopokopo Username",
@@ -20,6 +20,12 @@
                     "label": "Kopokopo Password",
                     "default": "",
                     "tooltip": "Kopokopo Password as provided on their website.",
+                    "type": "text"
+                }, {
+                    "name": "kopokopo_listener_response_message",
+                    "label": "Kopokopo Response Message",
+                    "default": "Thank you for making payment with Us.",
+                    "tooltip": "Set Response Message that shall be sent when user send money to TIll Number",
                     "type": "text"
                 }]
         }]
