@@ -1,0 +1,7 @@
+[{
+        "name": "phone",
+        "label": "Phone",
+        "default": "",
+        "tooltip": "Enter Your Phone Number.",
+        "type": "text"
+    }]
