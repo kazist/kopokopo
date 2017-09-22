@@ -24,6 +24,7 @@ use Kazist\Service\Database\Query;
 class PaymentsModel extends BasePaymentsModel {
 
     public $code = '';
+    public $mpesa_code = '';
 
     public function appendSearchQuery($query) {
 
@@ -32,7 +33,8 @@ class PaymentsModel extends BasePaymentsModel {
     }
 
     public function notificationTransaction($payment_id) {
-        $this->processKopokopo($payment_id);
+        $this->processKopokopo($payment_id, $this->mpesa_code);
+        parent::successfulTransaction($payment_id, $this->mpesa_code);
     }
 
     public function completeTransaction($payment_id) {
@@ -80,6 +82,7 @@ class PaymentsModel extends BasePaymentsModel {
 
         $factory = new KazistFactory();
 
+
         $gateway = $this->getGatewayByName('kopokopo');
 
         $kopokopo_obj = $this->getKopokopoTransaction(trim($mpesa_code));
@@ -87,8 +90,8 @@ class PaymentsModel extends BasePaymentsModel {
         $deductions = json_decode($payment->deductions);
         $required_amount = ($deductions->amount) ? $deductions->amount : $payment->amount;
         $paid_amount = $kopokopo_amount = ($kopokopo_obj->amount) ? $kopokopo_obj->amount : '';
+        $paid_amount = $this->getConverterAmount($paid_amount, $gateway, false);
 
-        // $paid_amount = $this->getConverterAmount($paid_amount, $gateway, false);
         //  $required_amount = $this->getConverterAmount($required_amount, $gateway, false);
 
         $payment->code = $mpesa_code;
@@ -101,6 +104,8 @@ class PaymentsModel extends BasePaymentsModel {
         }
 
         if (!is_object($kopokopo_obj)) {
+            print_r($mpesa_code);
+            exit;
             $factory->enqueueMessage('Mpesa Code (' . $mpesa_code . ') does not exist.', 'error');
             return false;
         }
@@ -111,13 +116,13 @@ class PaymentsModel extends BasePaymentsModel {
             $is_valid = false;
         }
 
-        $this->saveKopokopoPayment($paid_amount, $mpesa_code,$kopokopo_obj->sender_phone);
+        $this->saveKopokopoPayment($paid_amount, $mpesa_code, $kopokopo_obj->sender_phone);
         $this->updateKopokopo($kopokopo_obj);
 
         return $is_valid;
     }
 
-    public function saveKopokopoPayment($amount, $mpesa_code,$phone) {
+    public function saveKopokopoPayment($amount, $mpesa_code, $phone) {
 
         $factory = new KazistFactory();
         $user = $factory->getUser();

@@ -106,7 +106,6 @@
                 "name",
                 "sender_phone",
                 "used_by",
-                "used",
                 "service_name",
                 "business_number",
                 "amount",
@@ -224,7 +223,7 @@
         },
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "used_by",
             "html_type": "recordpicker",
             "mysql_type": "int",
@@ -256,7 +255,7 @@
         },
         {
             "dropdown_filter": "0",
-            "nullable": "0",
+            "nullable": "1",
             "name": "used",
             "html_type": "yesno",
             "mysql_type": "int",
@@ -579,6 +578,7 @@
                     "join_table_name": "users_users"
                 },
                 "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -635,6 +635,7 @@
                     "join_table_name": "users_users"
                 },
                 "save": {
+                    "view_side": "both",
                     "index": ""
                 },
                 "media": [],
@@ -709,8 +710,10 @@
             "kt.amount",
             "kt.currency",
             "kt.created_by",
+            "uu_8849.name AS created_by_name",
             "kt.date_created",
             "kt.modified_by",
+            "uu_4126.name AS modified_by_name",
             "kt.date_modified"
         ],
         "leftjoin": [
@@ -719,6 +722,18 @@
                 "alias": "uu",
                 "name": "#__users_users",
                 "on": "kt.used_by = uu.id"
+            },
+            {
+                "table": "Users\\Users\\Code\\Tables\\Users",
+                "alias": "uu_8849",
+                "name": "#__users_users",
+                "on": "kt.created_by = uu_8849.id"
+            },
+            {
+                "table": "Users\\Users\\Code\\Tables\\Users",
+                "alias": "uu_4126",
+                "name": "#__users_users",
+                "on": "kt.modified_by = uu_4126.id"
             }
         ]
     }

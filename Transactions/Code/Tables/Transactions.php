@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Transactions
  *
- * @ORM\Table(name="kopokopo_transactions", indexes={@ORM\Index(name="used_by_index", columns={"used_by"})})
+ * @ORM\Table(name="kopokopo_transactions", indexes={@ORM\Index(name="used_by_index", columns={"used_by"}), @ORM\Index(name="created_by_index", columns={"created_by"}), @ORM\Index(name="modified_by_index", columns={"modified_by"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
@@ -46,14 +46,14 @@ class Transactions extends \Kazist\Table\BaseTable
     /**
      * @var integer
      *
-     * @ORM\Column(name="used_by", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="used_by", type="integer", length=11, nullable=true)
      */
     protected $used_by;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="used", type="integer", length=11, nullable=false)
+     * @ORM\Column(name="used", type="integer", length=11, nullable=true)
      */
     protected $used;
 

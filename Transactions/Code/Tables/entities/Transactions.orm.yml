@@ -25,12 +25,12 @@ Kopokopo\Transactions\Code\Tables\Transactions:
       name: used_by
       type: integer
       length: 11
-      nullable: false
+      nullable: true
     used:
       name: used
       type: integer
       length: 11
-      nullable: false
+      nullable: true
     service_name:
       name: service_name
       type: string
@@ -107,6 +107,10 @@ Kopokopo\Transactions\Code\Tables\Transactions:
   indexes:
     used_by_index:
       columns: [used_by]
+    created_by_index:
+      columns: [created_by]
+    modified_by_index:
+      columns: [modified_by]
   lifecycleCallbacks:
     prePersist:
       - onPrePersist

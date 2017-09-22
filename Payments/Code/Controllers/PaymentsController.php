@@ -49,10 +49,10 @@ class PaymentsController extends BasePaymentsController {
         $payment_id = $this->request->query->get('payment_id');
         $mpesa_code = $this->request->get('mpesa_code');
 
-        if ($this->model->checkMpesaCodeExist($mpesa_code)) {
+        if ($mpesa_code <> '' && $this->model->checkMpesaCodeExist($mpesa_code)) {
 
             $this->model = new PaymentsModel();
-            $this->model->processKopokopo($payment_id, $mpesa_code);
+            $this->model->mpesa_code = $mpesa_code;
             $this->model->notificationTransaction($payment_id);
             $payment_url = $this->model->getUrlByPaymentId($payment_id);
 
