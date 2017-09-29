@@ -241,7 +241,8 @@
                     "data_source": "db_table",
                     "join_field": "id",
                     "display_field": [
-                        "name"
+                        "name",
+                        " username"
                     ],
                     "join_table_name": "users_users"
                 },
@@ -697,6 +698,7 @@
             "kt.sender_phone",
             "kt.used_by",
             "uu.name AS used_by_name",
+            "uu.username AS used_by_username",
             "kt.used",
             "kt.service_name",
             "kt.business_number",
@@ -710,10 +712,10 @@
             "kt.amount",
             "kt.currency",
             "kt.created_by",
-            "uu_8849.name AS created_by_name",
+            "uu_1081.name AS created_by_name",
             "kt.date_created",
             "kt.modified_by",
-            "uu_4126.name AS modified_by_name",
+            "uu_8559.name AS modified_by_name",
             "kt.date_modified"
         ],
         "leftjoin": [
@@ -725,15 +727,15 @@
             },
             {
                 "table": "Users\\Users\\Code\\Tables\\Users",
-                "alias": "uu_8849",
+                "alias": "uu_1081",
                 "name": "#__users_users",
-                "on": "kt.created_by = uu_8849.id"
+                "on": "kt.created_by = uu_1081.id"
             },
             {
                 "table": "Users\\Users\\Code\\Tables\\Users",
-                "alias": "uu_4126",
+                "alias": "uu_8559",
                 "name": "#__users_users",
-                "on": "kt.modified_by = uu_4126.id"
+                "on": "kt.modified_by = uu_8559.id"
             }
         ]
     }
