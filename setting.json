@@ -28,5 +28,14 @@
                     "tooltip": "Set Response Message that shall be sent when user send money to TIll Number",
                     "type": "text"
                 }]
+        }, {
+            "title": "Instructions",
+            "settings": [{
+                    "name": "kopokopo_payments_tooltip_instructions",
+                    "label": "Withdraw Instructions",
+                    "default": "<p>ONLY <strong>SAFARICOM/MPESA</strong> Phone Number Accepted.<br /> Dont Enter any Special Character <strong>\"+\"</strong> or <strong>\"0\"</strong>.<br /> Your Phone Number MUST be Registered with MPESA<br /> <br /> Enter Number in this Exact Format <strong>254722xxxxxx</span></p>",
+                    "tooltip": "Withdraw Instructions",
+                    "type": "editor"
+                }]
         }]
 }
