@@ -62,5 +62,41 @@
                 "SUPER_ADMIN": ["can_view", "can_viewown"],
                 "ADMIN": ["can_view", "can_viewown"]
             }
+        }, {
+            "title": "Edit Transaction {{ item.name }}",
+            "description": "Edit Transaction {{ item.name }}.",
+            "controller": "Kopokopo\\Transactions\\Code\\Controllers\\Admin\\TransactionsController::editAction",
+            "unique_name": "admin.kopokopo.transactions.edit",
+            "route": "admin/kopokopo/transactions/edit/{id}",
+            "permissions": "can_add, can_write, can_writeown",
+            "arguments": {
+                "id": null
+            },
+            "keywords": "transaction, edit, {{ item.name }}",
+            "priority": "0.5",
+            "changefreq": "weekly",
+            "login_required": 1,
+            "roles": {
+                "SUPER_ADMIN": ["can_add", "can_write", "can_writeown"],
+                "ADMIN": ["can_add", "can_write", "can_writeown"]
+            }
+        }, {
+            "title": "Transaction Save: {{ item.name }}",
+            "description": "Transaction Save: {{ item.name }}",
+            "controller": "Kopokopo\\Transactions\\Code\\Controllers\\Admin\\TransactionsController::saveAction",
+            "unique_name": "admin.kopokopo.transactions.save",
+            "route": "admin/kopokopo/transactions/save",
+            "permissions": "can_add, can_write, can_writeown",
+            "arguments": {
+                "id": null
+            },
+            "keywords": "transaction, save, {{ item.name }}",
+            "priority": "0.5",
+            "changefreq": "weekly",
+            "login_required": 1,
+            "roles": {
+                "SUPER_ADMIN": ["can_add", "can_write", "can_writeown"],
+                "ADMIN": ["can_add", "can_write", "can_writeown"]
+            }
         }]
 } 	
