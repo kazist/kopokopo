@@ -99,13 +99,8 @@ class PaymentsModel extends BasePaymentsModel {
         $payment->type = 'kopokopo';
         $payment->gateway_id = $gateway->id;
 
-        if ($required_amount > $kopokopo_amount) {
-            $paid_amount = $required_amount;
-        }
-
         if (!is_object($kopokopo_obj)) {
-            print_r($mpesa_code);
-            exit;
+          
             $factory->enqueueMessage('Mpesa Code (' . $mpesa_code . ') does not exist.', 'error');
             return false;
         }
