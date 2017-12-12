@@ -1,5 +1,6 @@
 [{
         "name": "phone",
+        "class": "kopokopo_phone",
         "label": "Phone",
         "default": "",
         "tooltip": "<p>ONLY <strong>SAFARICOM/MPESA</strong> Phone Number Accepted.<br /> Dont Enter any Special Character <strong>\"+\"</strong> or <strong>\"0\"</strong>.<br /> Your Phone Number MUST be Registered with MPESA<br /> <br /> Enter Number in this Exact Format <strong>254722xxxxxx</span></p>",
